@@ -1,0 +1,57 @@
+package edu.itc.se.shop.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
+
+import edu.itc.se.shop.domain.Product;
+
+@Repository
+public class ProductRepository {
+    private final JdbcClient jdbc;
+
+    public ProductRepository(JdbcClient jdbc) { this.jdbc = jdbc; }
+
+    public List<Product> findAll() {
+        return jdbc.sql("SELECT id, name, price, stock FROM product ORDER BY id")
+                   .query(Product.class).list();
+    }
+
+    public Optional<Product> findById(long id) {
+        return jdbc.sql("SELECT id, name, price, stock FROM product WHERE id = :id")
+                   .param("id", id)
+                   .query(Product.class).optional();
+    }
+
+    public List<Product> findByNameContaining(String text) {
+        return jdbc.sql("SELECT id, name, price, stock FROM product WHERE LOWER(name) LIKE :q ORDER BY id")
+                   .param("q", "%" + text.toLowerCase() + "%")
+                   .query(Product.class).list();
+    }
+
+    public long insert(Product p) {
+        var keys = new GeneratedKeyHolder();
+        jdbc.sql("INSERT INTO product(name, price, stock) VALUES (:name, :price, :stock)")
+            .param("name", p.name())
+            .param("price", p.price())
+            .param("stock", p.stock())
+            .update(keys, "id");
+        return keys.getKey().longValue();
+    }
+
+    public int updateStock(long id, int delta) {
+        return jdbc.sql("UPDATE product SET stock = stock + :delta WHERE id = :id AND stock + :delta >= 0")
+                   .param("delta", delta)
+                   .param("id", id)
+                   .update();
+    }
+
+    public int delete(long id) {
+        return jdbc.sql("DELETE FROM product WHERE id = :id")
+                   .param("id", id)
+                   .update();
+    }
+}

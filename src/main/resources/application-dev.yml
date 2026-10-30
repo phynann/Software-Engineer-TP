@@ -1,0 +1,14 @@
+spring.datasource.url=jdbc:h2:mem:shop;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+logging.level.edu.itc.se.shop=DEBUG
+logging.level.org.hibernate.SQL=DEBUG
+
+management.info.app.name=${spring.application.name}
+management.info.app.version=@project.version@
+management.info.app.java.version=@java.version@

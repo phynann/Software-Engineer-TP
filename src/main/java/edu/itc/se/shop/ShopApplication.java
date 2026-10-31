@@ -7,13 +7,16 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import edu.itc.se.shop.config.ShopProperties;
 import edu.itc.se.shop.service.Notifier;
 import edu.itc.se.shop.service.ReportBuilder;
 import edu.itc.se.shop.service.WelcomeService;
 
 @SpringBootApplication
+@EnableConfigurationProperties(ShopProperties.class)
 public class ShopApplication {
     private static final Logger log = LoggerFactory.getLogger(ShopApplication.class);
 

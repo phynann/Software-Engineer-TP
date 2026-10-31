@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:shop-test;DB_CLOSE_DELAY=-1
+  sql:
+    init:
+      data-locations: classpath:data-test.sql
+  h2:
+    console:
+      enabled: false
+
+logging:
+  level:
+    edu.itc.se.shop: DEBUG

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/shop}
+    username: ${DB_USER:shop}
+    password: ${DB_PASS:secret_password}
+    driver-class-name: org.postgresql.Driver
+  h2:
+    console:
+      enabled: false
+
+logging:
+  level:
+    edu.itc.se.shop: INFO
+    org.springframework.jdbc: INFO
+    org.springframework.transaction: INFO
